@@ -10,4 +10,16 @@ class MyView(
     fun render(request: HttpServletRequest, response: HttpServletResponse) {
         forward(viewPath, request, response)
     }
+
+    fun render(model: Map<String, Any>, request: HttpServletRequest, response: HttpServletResponse) {
+        modelToRequestAttribute(model, request)
+        forward(viewPath, request, response)
+    }
+
+    private fun modelToRequestAttribute(
+        model: Map<String, Any>,
+        request: HttpServletRequest,
+    ) {
+        model.forEach { (k, v) -> request.setAttribute(k, v) }
+    }
 }
