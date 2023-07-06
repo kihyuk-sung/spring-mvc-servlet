@@ -1,1 +1,3 @@
-rootProject.name = "servlet"
+rootProject.name = "spring-mvc"
+
+include("spring-mvc-servlet")
