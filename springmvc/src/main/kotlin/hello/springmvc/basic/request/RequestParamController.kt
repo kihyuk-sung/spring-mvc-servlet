@@ -1,10 +1,12 @@
 package hello.springmvc.basic.request
 
+import hello.springmvc.basic.HelloData
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
@@ -31,12 +33,7 @@ class RequestParamController {
         @RequestParam("username") memberName: String,
         @RequestParam("age") memberAge: Int,
     ): String = "ok"
-        .also {
-            log.info(
-                "username={}, age={}",
-                memberName, memberAge
-            )
-        }
+        .also { log.info("username={}, age={}", memberName, memberAge) }
 
     @ResponseBody
     @RequestMapping("/request-param-v3")
@@ -44,12 +41,7 @@ class RequestParamController {
         @RequestParam username: String,
         @RequestParam age: Int,
     ): String = "ok"
-        .also {
-            log.info(
-                "username={}, age={}",
-                username, age
-            )
-        }
+        .also { log.info("username={}, age={}", username, age) }
 
     @ResponseBody
     @RequestMapping("/request-param-v4")
@@ -57,12 +49,7 @@ class RequestParamController {
         username: String,
         age: Int,
     ): String = "ok"
-        .also {
-            log.info(
-                "username={}, age={}",
-                username, age
-            )
-        }
+        .also { log.info("username={}, age={}", username, age) }
 
     @ResponseBody
     @RequestMapping("/request-param-required")
@@ -70,12 +57,7 @@ class RequestParamController {
         @RequestParam(required = true) username: String,
         @RequestParam(required = false) age: Int?,
     ): String = "ok"
-        .also {
-            log.info(
-                "username={}, age={}",
-                username, age
-            )
-        }
+        .also { log.info("username={}, age={}", username, age) }
 
     @ResponseBody
     @RequestMapping("/request-param-default")
@@ -83,22 +65,26 @@ class RequestParamController {
         @RequestParam(required = true, defaultValue = "guest") username: String,
         @RequestParam(required = false, defaultValue = "-1") age: Int,
     ): String = "ok"
-        .also {
-            log.info(
-                "username={}, age={}",
-                username, age
-            )
-        }
+        .also { log.info("username={}, age={}", username, age) }
 
     @ResponseBody
     @RequestMapping("/request-param-map")
     fun requestParamMap(
         @RequestParam paramMap: Map<String, String>,
     ): String = "ok"
-        .also {
-            log.info(
-                "username={}, age={}",
-                paramMap["username"], paramMap["age"]
-            )
-        }
+        .also { log.info("username={}, age={}", paramMap["username"], paramMap["age"]) }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    fun modelAttributeV1(
+        @ModelAttribute helloData: HelloData,
+    ): String = "ok"
+        .also { log.info("username={}, age={}", helloData.username, helloData.age) }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    fun modelAttributeV2(
+        helloData: HelloData,
+    ): String = "ok"
+        .also { log.info("username={}, age={}", helloData.username, helloData.age) }
 }
